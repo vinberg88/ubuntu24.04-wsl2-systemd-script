@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 if [ "$1" != "--force" ]; then
     if [ -f /usr/sbin/start-systemd-namespace ]; then
         echo "It appears you have already installed the systemd hack."
