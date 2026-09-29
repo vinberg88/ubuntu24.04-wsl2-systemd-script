@@ -1,11 +1,8 @@
-# ubuntu-wsl2-systemd-script
-## Script is unsupported and will no longer be maintained, but will be up here because it is used by quite some people.
+# ubuntu-wsl2-systemd-script for UBUNTU 24.04
 
-Script to enable systemd support on current Ubuntu WSL2 images from the Windows store. 
+Script to enable systemd support on current Ubuntu 24.04 images WSL image. 
 
-I am not responsible for broken installations, fights with your roommates and police ringing your door ;-).
-
-Instructions from [the snapcraft forum](https://forum.snapcraft.io/t/running-snaps-on-wsl2-insiders-only-for-now/13033) turned into a script. Thanks to [Daniel](https://forum.snapcraft.io/u/daniel) on the Snapcraft forum! 
+<img width="1037" height="271" alt="10054" src="https://github.com/user-attachments/assets/8f6ec452-287a-400b-84b2-d73a2a012faf" />
 
 ## Usage
 You need ```git``` to be installed for the commands below to work. Use
