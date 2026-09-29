@@ -24,9 +24,9 @@ bash ubuntu-wsl2-systemd-script.sh
 
 # Enter your password and wait until the script has finished
 ```
-### Then restart the Ubuntu shell and try running systemctl
+### Then restart the Ubuntu 24.04 and scrit will work =)
 ```sh
-systemctl
+
 
 ```
 If you don't get an error and see a list of units, the script worked.
