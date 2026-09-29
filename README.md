@@ -26,7 +26,7 @@ bash ubuntu-wsl2-systemd-script.sh
 ```
 ### Then restart the Ubuntu 24.04 and scrit will work =)
 ```sh
-Find morr desktops here for ubuntu - https://github.com/vinberg88/ubuntu/
+Find more desktops here for Ubuntu 24.04 - https://github.com/vinberg88/ubuntu/
 
 ```
 If you don't get an error and see a list of units, the script worked.
