@@ -1,4 +1,4 @@
-# ubuntu-wsl2-systemd-script for UBUNTU 24.04
+# ubuntu-wsl2-systemd-script for UBUNTU 24.04 - For WSL desktops to work.
 
 This script is so god for desktops via Ubuntu 24.04 WSL - All desktop starts thanks to this Magic script.
 
