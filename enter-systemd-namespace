@@ -1,3 +1,5 @@
+#Script for UBUNTU 24.04
+
 #!/bin/bash --norc
 
 if [ "$LOGNAME" != "root" ]; then
