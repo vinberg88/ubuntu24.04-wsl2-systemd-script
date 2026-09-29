@@ -29,7 +29,6 @@ bash ubuntu-wsl2-systemd-script.sh
 Find more desktops here for Ubuntu 24.04 - https://github.com/vinberg88/ubuntu/
 
 ```
-If you don't get an error and see a list of units, the script worked.
 
 Have fun using systemd on your Ubuntu 24.04 WSL2 image. You may use and change and distribute this script in whatever way you'd like - 2026 
 
