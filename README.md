@@ -24,7 +24,7 @@ bash ubuntu-wsl2-systemd-script.sh
 
 # Enter your password and wait until the script has finished
 ```
-### Then restart Ubuntu 24.04 and scrit will work =)
+### Then restart Ubuntu 24.04 and script will work =)
 ```sh
 Find more desktops here for Ubuntu 24.04 - https://github.com/vinberg88/ubuntu/
 
