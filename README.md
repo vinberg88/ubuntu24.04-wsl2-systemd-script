@@ -20,7 +20,7 @@ to do so.
 
 git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
 cd ubuntu24.04-wsl2-systemd-script/
-bash ubuntu-wsl2-systemd-script.sh<img width="483" height="227" alt="linux" src="https://github.com/user-attachments/assets/d29cd77a-5d9e-45ca-ba8e-fa3df32c5f1f" />
+bash ubuntu-wsl2-systemd-script.sh
 
 
 # Enter your password and wait until the script has finished
