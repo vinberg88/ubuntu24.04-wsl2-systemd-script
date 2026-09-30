@@ -19,7 +19,7 @@ to do so.
 ```sh
 
 git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
-cd ubuntu24.04-wsl2-systemd-script/
+cd ubuntu24.04-wsl2-systemd-script
 bash ubuntu-wsl2-systemd-script.sh
 
 
