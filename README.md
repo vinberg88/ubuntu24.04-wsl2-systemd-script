@@ -20,7 +20,8 @@ to do so.
 
 git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
 cd ubuntu24.04-wsl2-systemd-script/
-bash ubuntu-wsl2-systemd-script.sh
+bash ubuntu-wsl2-systemd-script.sh<img width="483" height="227" alt="linux" src="https://github.com/user-attachments/assets/d29cd77a-5d9e-45ca-ba8e-fa3df32c5f1f" />
+
 
 # Enter your password and wait until the script has finished
 ```
@@ -32,10 +33,15 @@ Find more desktops here for Ubuntu 24.04 - https://github.com/vinberg88/ubuntu/
 
 Have fun using systemd on your Ubuntu 24.04 WSL2 image. You may use and change and distribute this script in whatever way you'd like - 2026 
 
-
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
-<img width="600" height="100" alt="UBNUT 24.04 FOR WSL" src="https://github.com/user-attachments/assets/9ae95696-b2b9-49e8-a7ec-1d2e5e13eefb" />
+<img width="600" height="100" alt="UBUNTU 24.04 FOR WSL" src="https://github.com/user-attachments/assets/9ae95696-b2b9-49e8-a7ec-1d2e5e13eefb" />
 </p>
+
+<p align="center">
+<a href="https://github.com/vinberg88">
+<img width="483" height="227" alt="linux" src="https://github.com/user-attachments/assets/2410de82-e419-41b6-a7f0-9fc2db9d8b9d" />
+</p>
+
 
 
