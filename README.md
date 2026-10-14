@@ -189,6 +189,11 @@ Update the checkout with `git pull --ff-only`. This repository's
 | `UBUNTU-26.04.md` | Redirect to the separate Ubuntu 26.04 repository |
 | `ubuntu-26.04-budgie.sh` | Compatibility copy only; use the Ubuntu 26.04 repository |
 
+<p align="center">
+  <a href="https://github.com/vinberg88/ubuntu/">
+ <img width="573" height="258" alt="ubuntu" src="https://github.com/user-attachments/assets/101e5e10-b099-4792-b995-037a2cd81c1c" />
+</p>
+
 Kind Regards,
 Mattias Vinberg - Stockholm - Sweden - 2026
 
