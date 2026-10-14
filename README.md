@@ -230,5 +230,3 @@ Budgie is one of the desktop environments available through the companion Ubuntu
 </p>
 
 Have fun exploring Ubuntu 24.04 and Ubuntu 26.04 desktops on WSL2!
-
-

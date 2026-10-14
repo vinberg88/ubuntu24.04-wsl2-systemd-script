@@ -345,4 +345,3 @@ case "$MODE" in
         install_legacy_workaround
         ;;
 esac
-

@@ -78,4 +78,3 @@ fi
 
 printf 'Legacy namespace was not entered because systemd is PID 1.\n' >&2
 exit 1
-

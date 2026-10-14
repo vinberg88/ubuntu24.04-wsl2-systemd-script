@@ -1,0 +1,4 @@
+*.md text eol=lf
+*.sh text eol=lf
+start-systemd-namespace text eol=lf
+enter-systemd-namespace text eol=lf
