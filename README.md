@@ -1,7 +1,11 @@
 # Ubuntu 24.04 WSL2 Systemd Helper for WSL Desktops
 
+Start any desktopp via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP - 2026
 
-Start any desktopp via this script for Ubuntu 24.04
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu/">
+<img width="1920" height="1080" alt="Ubuntu 24.04 Budgie Desktop" src="https://github.com/user-attachments/assets/033ad70c-eb64-496c-9957-37466923a06d" />
+</p>
 
 This project prepares **Ubuntu 24.04 on WSL2** for complete X11 desktop
 sessions displayed through **X410**. The same systemd helper is used by GNOME,
