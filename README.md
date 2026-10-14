@@ -36,7 +36,13 @@ Find more desktops here for Ubuntu 24.04 - https://github.com/vinberg88/ubuntu/
 
 ```
 
-Have fun using systemd on your Ubuntu 24.04 WSL2 image. You may use and change and distribute this script in whatever way you'd like - 2026 
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu/">
+<img width="810" height="403" alt="ubuntu-strat-script" src="https://github.com/user-attachments/assets/f8cb0834-e40b-4a18-aa64-b3a98151e925" />
+</p>
+
+
+Have fun using systemd on your Ubuntu 24.04 WSL2 image - 2026 - Make desktops starts for WSL.
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
