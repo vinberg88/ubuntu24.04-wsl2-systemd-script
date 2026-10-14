@@ -2,11 +2,11 @@
 
 # Launch Ubuntu Budgie 10.10 as a nested Wayland desktop on WSLg.
 #
-# Ubuntu 26.04 uses Labwc for its Budgie Wayland session. WSLg exposes its
-# X11 socket directory as a read-only mount without the sticky bit expected by
-# wlroots/Xwayland. Running the desktop in a transient systemd service with
-# PrivateTmp=yes gives Xwayland a correct private socket directory without
-# changing WSLg's global mount.
+# Ubuntu 26.04 uses Labwc for its Budgie Wayland session. Its wlroots 0.19.2
+# nested Wayland backend can crash after a pointer-leave event, so the outer
+# Labwc window uses WSLg's X11 transport while Budgie remains on Wayland.
+# PrivateTmp=yes and a private X0 link give Labwc and Xwayland separate sockets
+# without changing WSLg's global read-only mount.
 
 set -Eeuo pipefail
 
@@ -182,8 +182,11 @@ public static class Budgie26WindowControl {
     private static Process FindWindow() {
         Process newest = null;
         foreach (Process process in Process.GetProcessesByName("msrdc")) {
-            if (process.MainWindowHandle == IntPtr.Zero ||
-                !process.MainWindowTitle.StartsWith("labwc - ", StringComparison.Ordinal)) {
+            string title = process.MainWindowTitle;
+            bool isLabwcWindow =
+                title.StartsWith("labwc - ", StringComparison.Ordinal) ||
+                title.StartsWith("wlroots - ", StringComparison.Ordinal);
+            if (process.MainWindowHandle == IntPtr.Zero || !isLabwcWindow) {
                 continue;
             }
 
@@ -454,9 +457,10 @@ start_session() {
         --setenv="USER=$CURRENT_USER"
         --setenv="LOGNAME=$CURRENT_USER"
         --setenv="XDG_RUNTIME_DIR=$RUNTIME_DIR"
+        --setenv="DISPLAY=${DISPLAY:-:0}"
         --setenv="WAYLAND_DISPLAY=$wayland_display"
         --setenv="XDG_SESSION_TYPE=wayland"
-        --setenv="WLR_BACKENDS=wayland"
+        --setenv="WLR_BACKENDS=x11"
         --setenv="WLR_RENDERER=pixman"
         --setenv="GDK_BACKEND=wayland,x11"
         --setenv="QT_QPA_PLATFORM=wayland"
@@ -467,7 +471,13 @@ start_session() {
         run_command+=(--setenv="PULSE_SERVER=unix:/mnt/wslg/PulseServer")
     fi
 
-    run_command+=(/usr/bin/startbudgielabwc)
+    run_command+=(
+        /usr/bin/bash
+        -c
+        'install -d -m 1777 /tmp/.X11-unix &&
+            ln -sfn /mnt/wslg/.X11-unix/X0 /tmp/.X11-unix/X0 &&
+            exec /usr/bin/startbudgielabwc'
+    )
     "${run_command[@]}"
 
     for _ in {1..80}; do
@@ -593,6 +603,16 @@ doctor_check() {
         say "[WARN] Windows maximize and restore controls are unavailable"
         say "       Starting, stopping, and resizing the desktop will still work."
         ((warnings += 1))
+    fi
+
+    if command -v dpkg-query >/dev/null 2>&1 && command -v dpkg >/dev/null 2>&1; then
+        local desktop_view_version
+        desktop_view_version="$(dpkg-query -W -f='${Version}' budgie-desktop-view 2>/dev/null || true)"
+        if [[ -n "$desktop_view_version" ]] &&
+            dpkg --compare-versions "$desktop_view_version" lt 10.10.3; then
+            printf '[INFO] Budgie Desktop View %s sorts desktop icons automatically\n' "$desktop_view_version"
+            say "[INFO] Free desktop-icon placement requires version 10.10.3 or newer"
+        fi
     fi
 
     if [[ ! -e /usr/share/budgie-desktop/labwc/environment ]]; then

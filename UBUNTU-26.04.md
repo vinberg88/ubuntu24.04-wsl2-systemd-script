@@ -132,7 +132,7 @@ Full desktop sessions are more demanding than individual WSLg applications. When
 
 ## Ubuntu Budgie 26.04 launcher
 
-Ubuntu 26.04 uses the Wayland-based Budgie 10.10 session with Labwc. The included `ubuntu-26.04-budgie.sh` launcher runs that session as a managed systemd service inside a WSLg window.
+Ubuntu 26.04 uses the Wayland-based Budgie 10.10 session with Labwc. The included `ubuntu-26.04-budgie.sh` launcher runs that session as a managed systemd service inside a WSLg window. Budgie remains a Wayland desktop; the outer Labwc window uses WSLg's X11 transport to avoid an Ubuntu 26.04 wlroots 0.19.2 pointer-leave crash in its nested Wayland backend.
 
 Install Ubuntu Budgie and the required Wayland components if they are not already installed:
 
@@ -237,7 +237,7 @@ Running a `size` command also restores normal windowed mode before applying the 
 bash ubuntu-26.04-budgie.sh size medium
 ```
 
-The launcher uses `PrivateTmp=yes` for the service. This gives Labwc's Xwayland process a correct private `/tmp/.X11-unix` directory and avoids changing WSLg's read-only X11 socket mount.
+The launcher uses `PrivateTmp=yes` for the service. This gives Labwc's Xwayland process a correct private `/tmp/.X11-unix` directory and avoids changing WSLg's read-only X11 socket mount. It links only WSLg's `X0` socket into that private directory so Labwc can use WSLg for its outer window while its own Xwayland server safely allocates another display.
 
 ### Why this launcher uses WSLg instead of X410
 
@@ -292,6 +292,18 @@ To fill the usable Windows screen while retaining correct mouse coordinates, use
 ```bash
 bash ubuntu-26.04-budgie.sh maximize
 ```
+
+### Desktop icons cannot be moved freely
+
+This is a Budgie version limitation rather than a WSL input problem. Ubuntu 26.04 currently ships Budgie Desktop View 10.10.2, which keeps desktop items in its automatically ordered grid. Upstream Budgie 10.10.3 introduces free placement of desktop icons.
+
+Check the installed and available Ubuntu package versions with:
+
+```bash
+apt-cache policy budgie-desktop-view
+```
+
+When Ubuntu publishes version 10.10.3 or newer in the normal update repository, install it through the regular package updater. The launcher deliberately does not replace a core desktop component with an unverified source build.
 
 ### Portal, screencast, or `glamor` warnings in the log
 
