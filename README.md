@@ -1,6 +1,6 @@
 # Ubuntu 24.04 WSL2 Systemd Helper for WSL Desktops
 
-Start any desktop via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP - 2026
+Start any desktop via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
@@ -96,6 +96,13 @@ Close all Ubuntu windows and restart WSL from Windows PowerShell:
 ```powershell
 wsl --shutdown
 ```
+
+Look for more desktops for WSL and Windonws 11.
+
+<p align="center">
+<a href="https://github.com/vinberg88">
+<img width="680" height="321" alt="wsl" src="https://github.com/user-attachments/assets/ad4443ca-9ea9-44a3-a742-fd11112c585b" />
+</p>
 
 ## Verify and start a desktop
 
