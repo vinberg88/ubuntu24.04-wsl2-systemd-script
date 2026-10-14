@@ -1,153 +1,181 @@
-# Ubuntu 24.04 WSL2 Systemd. Build Desktops that starts for WSL
+# Ubuntu 24.04 WSL2 Systemd — Start Desktops with X410
 
-Prepare **Ubuntu 24.04 on WSL2** for Linux desktop launchers that require
-systemd.
+Start a complete **Ubuntu 24.04 Budgie desktop** through **X410** on WSL2.
+The Classic mode in this repository preserves the X410 `DISPLAY` value while
+entering the systemd namespace required by the desktop session.
 
 > [!IMPORTANT]
-> Are you using **Ubuntu 26.04**? Use the separate
+> Ubuntu 26.04 has a separate, tested WSLg launcher. Use
 > [`ubuntu26.04-wsl2-budgie`](https://github.com/vinberg88/ubuntu26.04-wsl2-budgie)
-> repository instead. It contains the tested Ubuntu 26.04 Budgie installer and
-> WSLg launcher.
+> for Ubuntu 26.04.
 
-<p align="center">
-  <a href="https://github.com/vinberg88/ubuntu/">
-    <img width="1037" height="271" alt="Ubuntu 24.04 WSL desktop banner" src="https://github.com/user-attachments/assets/8f6ec452-287a-400b-84b2-d73a2a012faf" />
-  </a>
-</p>
+## Which mode should I use?
 
-## Choose the correct repository
-
-| Ubuntu version | Use this project |
+| Goal | Recommended mode |
 | --- | --- |
-| Ubuntu 24.04 LTS | This repository |
-| Ubuntu 26.04 LTS | [`ubuntu26.04-wsl2-budgie`](https://github.com/vinberg88/ubuntu26.04-wsl2-budgie) |
+| Start the complete Ubuntu 24.04 Budgie desktop with X410 | **Classic Budgie** |
+| Run ordinary services or individual WSLg applications | Native WSL systemd |
 
-## Quick start for Ubuntu 24.04
+Classic Budgie mode is the default because it reproduces the systemd namespace
+environment that has been verified to start Budgie on Ubuntu 24.04.
 
-First update WSL from Windows PowerShell:
+The installer prevents Classic and native systemd from running together. Two
+simultaneous systemd environments compete for the user D-Bus and runtime
+sockets, which can stop Budgie from starting.
+
+## Install Classic Budgie mode
+
+Start X410 in Windows first. Use the X410 window or desktop mode that normally
+works on your computer. Do not manually replace a working `DISPLAY` value.
+
+Then open Windows PowerShell and update WSL:
 
 ```powershell
 wsl --update
 wsl --list --verbose
 ```
 
-Confirm that Ubuntu 24.04 is using WSL version `2`. Then open Ubuntu and run:
+Confirm that Ubuntu 24.04 uses WSL version `2`. Then open Ubuntu 24.04 and run:
 
 ```bash
 sudo apt update
-sudo apt install -y git mesa-utils daemonize util-linux-extra
+sudo apt install -y git mesa-utils daemonize util-linux-extra ubuntu-budgie-desktop
 git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
 cd ubuntu24.04-wsl2-systemd-script
 bash ubuntu-wsl2-systemd-script.sh
 ```
 
-Modern WSL uses **native systemd**. If the script changes `/etc/wsl.conf`, close
-Ubuntu and run this once in Windows PowerShell:
+The default command installs Classic Budgie mode and sets
+`systemd=false` in `/etc/wsl.conf`. Close Ubuntu and run:
 
 ```powershell
 wsl --shutdown
 ```
 
-Open Ubuntu again and check the installation:
+Start X410 again if it is not already running, then open Ubuntu and verify the
+complete environment:
 
 ```bash
 cd ~/ubuntu24.04-wsl2-systemd-script
 bash ubuntu-wsl2-systemd-script.sh --check
+printf 'DISPLAY=%s\n' "$DISPLAY"
 ```
 
-The check reports systemd, D-Bus, WSLg, X11, Wayland, audio, and OpenGL status.
-It does not change the system.
+A correct Classic installation reports:
 
-## Start a desktop
+```text
+/etc/wsl.conf systemd: false
+Classic Bash hook: installed
+[OK] Classic Budgie systemd namespace is active without native systemd.
+Result: ready (0 warning(s))
+```
 
-This repository prepares systemd; it does not install a complete desktop by
-itself. Desktop-specific packages and launch instructions are available here:
+The `DISPLAY` line must contain the X410 display selected by your Windows/WSL
+setup. The Classic helper copies this value into `~/.systemd-env`, so Budgie and
+programs started inside the namespace continue to use X410.
 
-### [Ubuntu 24.04 desktops for WSL](https://github.com/vinberg88/ubuntu/)
-
-## Native systemd and the old workaround
-
-Native WSL systemd is the recommended setup. If this command prints `systemd`,
-you already have the correct configuration:
+You can then start Budgie:
 
 ```bash
-ps -p 1 -o comm=
+budgie-desktop
 ```
 
-The files `start-systemd-namespace` and `enter-systemd-namespace` are the
-project's original workaround from before WSL supported systemd natively. They
-remain for historical compatibility only.
+Keep that Ubuntu terminal open while the desktop is running.
 
-Use `--legacy` only when all of the following are true:
-
-- native systemd is unavailable;
-- WSL cannot be updated; and
-- you understand that the workaround changes Bash startup, sudoers, and the
-  systemd namespace.
-
-Do not install legacy mode when systemd is already PID 1. The script refuses to
-layer the workaround on top of native systemd.
-
-## Useful commands
+## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `bash ubuntu-wsl2-systemd-script.sh` | Check or enable native WSL systemd |
-| `bash ubuntu-wsl2-systemd-script.sh --check` | Show non-destructive diagnostics |
+| `bash ubuntu-wsl2-systemd-script.sh` | Install Classic Budgie mode |
+| `bash ubuntu-wsl2-systemd-script.sh --classic-budgie` | Same as the default command |
+| `bash ubuntu-wsl2-systemd-script.sh --check` | Diagnose systemd, D-Bus, display, and conflicts |
+| `bash ubuntu-wsl2-systemd-script.sh --native` | Remove Classic mode and enable native WSL systemd |
 | `bash ubuntu-wsl2-systemd-script.sh --help` | Show all options |
-| `bash ubuntu-wsl2-systemd-script.sh --legacy` | Install the historical workaround |
+
+## Return to native WSL systemd
+
+If you no longer need the Classic Budgie environment, run:
+
+```bash
+cd ~/ubuntu24.04-wsl2-systemd-script
+bash ubuntu-wsl2-systemd-script.sh --native
+```
+
+Then close Ubuntu and run `wsl --shutdown` from Windows PowerShell. This removes
+the Classic Bash hook and enables `systemd=true` in `/etc/wsl.conf`.
 
 ## Troubleshooting
 
-### `systemd` is not PID 1
+### Budgie does not start
 
-Update WSL, run the default script, close Ubuntu, and run `wsl --shutdown` from
-PowerShell before reopening the distribution.
+Run:
+
+```bash
+bash ubuntu-wsl2-systemd-script.sh --check
+```
+
+If the check says that native and Classic systemd are running together,
+reinstall Classic mode and restart WSL:
+
+```bash
+bash ubuntu-wsl2-systemd-script.sh --classic-budgie
+```
+
+Then run `wsl --shutdown` from Windows PowerShell.
+
+### `Cannot open display` or an empty `DISPLAY`
+
+Close Ubuntu, start X410 in Windows, and open Ubuntu again. Check the value
+before starting Budgie:
+
+```bash
+printf 'DISPLAY=%s\n' "$DISPLAY"
+```
+
+Do not hard-code `DISPLAY=:0` unless that is the value supplied by your working
+X410 configuration. The script deliberately keeps the value inherited from
+Windows/WSL.
+
+### `Transport endpoint is not connected`
+
+This normally means two systemd user managers have competed for
+`/run/user/<uid>`. Reinstall Classic mode, shut down WSL completely, and open
+Ubuntu again.
 
 ### `$'\r': command not found`
 
-The script has Windows CRLF line endings or comes from an older checkout. Run:
+Update the checkout:
 
 ```bash
 git pull --ff-only
 ```
 
-This repository includes `.gitattributes` rules that keep shell scripts in Unix
-LF format.
-
-### A GUI application opens but the desktop does not
-
-That normally points to the desktop launcher or display configuration rather
-than systemd. Run the diagnostic check, then follow the instructions for the
-desktop you installed:
-
-```bash
-bash ubuntu-wsl2-systemd-script.sh --check
-```
+The repository's `.gitattributes` keeps shell scripts in Unix LF format.
 
 ### OpenGL reports `llvmpipe`
 
-`llvmpipe` is software rendering. Install the Mesa diagnostic tool and test
-WSL's D3D12 renderer:
+Install Mesa's diagnostic tool and test WSL's D3D12 renderer:
 
 ```bash
 sudo apt install -y mesa-utils
 GALLIUM_DRIVER=d3d12 glxinfo -B
 ```
 
-Hybrid-GPU computers may need an adapter selection in their desktop launcher,
-but do not permanently select NVIDIA, AMD, or Intel until you have confirmed
-which Windows graphics adapter should be used.
+## Origin of Classic mode
+
+The working namespace method comes from
+[`DamionGans/ubuntu-wsl2-systemd-script`](https://github.com/DamionGans/ubuntu-wsl2-systemd-script).
+That project is no longer maintained, so this repository provides an Ubuntu
+24.04-specific installer, conflict detection, and a clean native-mode switch.
+See [CREDITS.md](CREDITS.md) for provenance.
 
 ## Included files
 
 | File | Purpose |
 | --- | --- |
-| `ubuntu-wsl2-systemd-script.sh` | Native systemd setup, diagnostics, and explicit legacy mode |
-| `start-systemd-namespace` | Historical namespace helper |
-| `enter-systemd-namespace` | Historical namespace entry helper |
-| `UBUNTU-26.04.md` | Redirect for old Ubuntu 26.04 links |
-| `ubuntu-26.04-budgie.sh` | Compatibility copy; current development is in the Ubuntu 26.04 repository |
-
-For Microsoft's supported configuration, see
-[Use systemd to manage Linux services with WSL](https://learn.microsoft.com/windows/wsl/systemd).
+| `ubuntu-wsl2-systemd-script.sh` | Installs, removes, and diagnoses Classic or native systemd |
+| `start-systemd-namespace` | Starts or enters the Classic systemd namespace |
+| `enter-systemd-namespace` | Creates and enters the Classic PID namespace |
+| `CREDITS.md` | Original project attribution |
+| `UBUNTU-26.04.md` | Redirect to the separate Ubuntu 26.04 repository |
+| `ubuntu-26.04-budgie.sh` | Compatibility copy only; use the Ubuntu 26.04 repository |
