@@ -173,12 +173,12 @@ Classic mode, shut down WSL completely, and reopen Ubuntu.
 Update the checkout with `git pull --ff-only`. This repository's
 `.gitattributes` keeps shell scripts in Unix LF format.
 
-## Origin and included files
+## Origin and included files - Starta Amazing desktops for WSL =)
 
-The namespace method comes from
-[`DamionGans/ubuntu-wsl2-systemd-script`](https://github.com/DamionGans/ubuntu-wsl2-systemd-script).
-This repository keeps an Ubuntu 24.04-specific compatibility layer, conflict
-detection, and a clean native-mode switch. See [CREDITS.md](CREDITS.md).
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu">
+<img width="1021" height="717" alt="desktops for Ubuntu" src="https://github.com/user-attachments/assets/83685ed4-a1aa-417e-9b2a-d62b17f42624" />
+</p>
 
 | File | Purpose |
 | --- | --- |
@@ -188,3 +188,7 @@ detection, and a clean native-mode switch. See [CREDITS.md](CREDITS.md).
 | `CREDITS.md` | Original project attribution |
 | `UBUNTU-26.04.md` | Redirect to the separate Ubuntu 26.04 repository |
 | `ubuntu-26.04-budgie.sh` | Compatibility copy only; use the Ubuntu 26.04 repository |
+
+Kind Regards,
+Mattias Vinberg - Stockholm - Sweden - 2026
+
