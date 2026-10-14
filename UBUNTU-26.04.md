@@ -130,6 +130,48 @@ After the diagnostic check succeeds, continue with the desktop-specific launcher
 
 Full desktop sessions are more demanding than individual WSLg applications. When a desktop opens but feels slow, first check whether OpenGL is using `llvmpipe`, and then verify the launcher's display and D3D12 adapter settings.
 
+## Ubuntu Budgie 26.04 launcher
+
+Ubuntu 26.04 uses the Wayland-based Budgie 10.10 session with Labwc. The included `ubuntu-26.04-budgie.sh` launcher runs that session as a managed systemd service inside a WSLg window.
+
+Install Ubuntu Budgie and the required Wayland components if they are not already installed:
+
+```bash
+sudo apt update
+sudo apt install ubuntu-budgie-desktop labwc xwayland dbus-daemon
+```
+
+Check the environment without changing anything:
+
+```bash
+bash ubuntu-26.04-budgie.sh doctor
+```
+
+Start the desktop:
+
+```bash
+bash ubuntu-26.04-budgie.sh start
+```
+
+The first start asks for the normal Linux `sudo` password because the launcher creates a temporary systemd service. The desktop itself still runs as the current user.
+
+Manage the session with:
+
+```bash
+bash ubuntu-26.04-budgie.sh status
+bash ubuntu-26.04-budgie.sh log
+bash ubuntu-26.04-budgie.sh restart
+bash ubuntu-26.04-budgie.sh stop
+```
+
+The launcher uses `PrivateTmp=yes` for the service. This gives Labwc's Xwayland process a correct private `/tmp/.X11-unix` directory and avoids changing WSLg's read-only X11 socket mount.
+
+### Why this launcher uses WSLg instead of X410
+
+The Ubuntu 26.04 Budgie session is a wlroots/Labwc Wayland compositor. In testing, X410 did not provide the DRI3 or shared-memory path required by Labwc's nested X11 backend, so the compositor could not create an output. Launching `budgie-desktop` alone can show a panel and background, but it does not provide the Labwc window manager and therefore is not a complete session.
+
+For Ubuntu Budgie 26.04, use this WSLg launcher. X410 remains useful for traditional X11 desktops and individual X11 applications, but it is not the renderer used by this script.
+
 ## Troubleshooting
 
 ### `$'\r': command not found`
@@ -153,6 +195,20 @@ Run the main script once, restart WSL with `wsl --shutdown`, reopen Ubuntu, and 
 ### X11 or Wayland socket is unavailable
 
 Update WSL from PowerShell and restart it. The diagnostic checks expect a current WSLg installation for graphical Linux applications.
+
+### Budgie opens but an old panel is still visible
+
+An earlier manual `budgie-desktop` command may still be running outside the managed session. Close that old session, then run:
+
+```bash
+bash ubuntu-26.04-budgie.sh restart
+```
+
+The `doctor` command reports an unmanaged Budgie panel when it can detect one.
+
+### Portal, screencast, or `glamor` warnings in the log
+
+WSLg may report that the host portal could not register an empty app ID, that the wlroots screencast portal is unavailable, or that Xwayland is falling back from `glamor` to software rendering. These warnings do not stop the desktop session. Use `status` to confirm that Labwc, Xwayland, and the Budgie panel remain active.
 
 ---
 

@@ -24,6 +24,7 @@ Both versions use the same maintained scripts. The separate Ubuntu 26.04 page ke
 
 - Detects and configures native systemd on Ubuntu 24.04 and Ubuntu 26.04.
 - Provides a `--check` command for systemd, D-Bus, WSLg, X11, Wayland, audio, and OpenGL diagnostics.
+- Includes a managed WSLg launcher for the Ubuntu 26.04 Budgie 10.10 Wayland session.
 - Keeps the original systemd namespace helper for older WSL installations.
 - Provides the systemd foundation used by desktop launchers in the companion [Ubuntu desktop repository](https://github.com/vinberg88/ubuntu/).
 
@@ -213,6 +214,7 @@ If Windows interoperability is unavailable, the legacy script prints two `setx` 
 | File | Purpose |
 | --- | --- |
 | `ubuntu-wsl2-systemd-script.sh` | Configures native WSL systemd, runs diagnostics, or installs legacy mode when explicitly requested. |
+| `ubuntu-26.04-budgie.sh` | Starts, stops, checks, and diagnoses Ubuntu Budgie 10.10 as a managed WSLg/Labwc session. |
 | `start-systemd-namespace` | Starts or enters the legacy namespace, but exits harmlessly when native systemd owns PID 1. |
 | `enter-systemd-namespace` | Launches legacy systemd in a separate namespace with a startup timeout. |
 
