@@ -44,4 +44,13 @@ Have fun using systemd on your Ubuntu 24.04 WSL2 image. You may use and change a
 </p>
 
 
+Run Budgie like a pro or other desktops =)
+
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu/blob/main/Ubuntu24.04-BUDGIE.txt">
+<img width="1920" height="1080" alt="Ubuntu 24.04 Budgie Desktop" src="https://github.com/user-attachments/assets/033ad70c-eb64-496c-9957-37466923a06d" />
+</p>
+
+
+
 
