@@ -11,7 +11,7 @@ usage() {
     cat <<EOF
 Usage: $SCRIPT_NAME [OPTION]
 
-Prepare Ubuntu on WSL for systemd-based desktop launchers.
+Prepare Ubuntu 24.04 on WSL for systemd-based desktop launchers.
 
 Options:
   --check          Show systemd, WSLg, display, and graphics status.
@@ -21,8 +21,10 @@ Options:
   -h, --help       Show this help text.
 
 Native systemd is supported by modern WSL and is the correct mode for
-Ubuntu 24.04 and Ubuntu 26.04. Legacy mode is only for old WSL versions
-that cannot provide native systemd.
+Ubuntu 24.04. Ubuntu 26.04 users should use the dedicated repository:
+https://github.com/vinberg88/ubuntu26.04-wsl2-budgie
+
+Legacy mode is only for old WSL versions that cannot provide native systemd.
 EOF
 }
 
@@ -127,10 +129,13 @@ validate_supported_ubuntu() {
     [ "$OS_ID" = "ubuntu" ] || warn "This script is designed for Ubuntu; detected $OS_PRETTY."
 
     case "$OS_VERSION" in
-        24.04|26.04)
+        24.04)
+            ;;
+        26.04)
+            warn "Ubuntu 26.04 support has moved to https://github.com/vinberg88/ubuntu26.04-wsl2-budgie"
             ;;
         *)
-            warn "Ubuntu $OS_VERSION is not one of the tested releases (24.04 and 26.04)."
+            warn "Ubuntu $OS_VERSION is not the tested release for this repository (24.04)."
             ;;
     esac
 }

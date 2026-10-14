@@ -2,6 +2,9 @@
 
 # Launch Ubuntu Budgie 10.10 as a nested Wayland desktop on WSLg.
 #
+# Compatibility copy only. Current Ubuntu 26.04 development and installation
+# instructions live at https://github.com/vinberg88/ubuntu26.04-wsl2-budgie
+#
 # Ubuntu 26.04 uses Labwc for its Budgie Wayland session. Its wlroots 0.19.2
 # nested Wayland backend can crash after a pointer-leave event, so the outer
 # Labwc window uses WSLg's X11 transport while Budgie remains on Wayland.
