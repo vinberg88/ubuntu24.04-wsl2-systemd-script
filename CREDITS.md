@@ -1,7 +1,7 @@
 # Credits and provenance
 
 Classic desktop mode uses the systemd PID-namespace technique created for
-[`DamionGans/ubuntu-wsl2-systemd-script`](https://github.com/DamionGans/ubuntu-wsl2-systemd-script).
+[`Mattias Vinberg - StockHolm - sweden`](https://github.com/vinberg88/).
 
 The upstream README states that the script may be used, changed, and
 distributed. The upstream project is no longer maintained, so this repository
@@ -13,5 +13,9 @@ upstream command structure, including the Ubuntu 24.04-compatible
 `--unit=basic.target` option. The installer and diagnostics in
 `ubuntu-wsl2-systemd-script.sh` are maintained by this project.
 
-Original work was based on instructions from the
-[Snapcraft forum](https://forum.snapcraft.io/t/running-snaps-on-wsl2-insiders-only-for-now/13033).
+<p align="center">
+  <a href="https://github.com/vinberg88/ubuntu/">
+ <img width="573" height="258" alt="ubuntu" src="https://github.com/user-attachments/assets/101e5e10-b099-4792-b995-037a2cd81c1c" />
+</p>
+
+See more desktops for Ubuntu =)
