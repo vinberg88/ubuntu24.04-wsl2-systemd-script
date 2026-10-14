@@ -1,4 +1,4 @@
-# Ubuntu 24.04 WSL2 Systemd Helper
+# Ubuntu 24.04 WSL2 Systemd. Build Desktops that starts for WSL
 
 Prepare **Ubuntu 24.04 on WSL2** for Linux desktop launchers that require
 systemd.
