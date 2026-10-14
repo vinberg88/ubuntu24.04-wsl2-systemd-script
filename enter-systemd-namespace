@@ -1,9 +1,14 @@
-#Script for UBUNTU 24.04
+#!/usr/bin/env bash
 
-#!/bin/bash --norc
+set -u
 
-if [ "$LOGNAME" != "root" ]; then
-    echo "You need to run $0 through sudo"
+if [ "${LOGNAME:-}" != "root" ] && [ "$(id -u)" -ne 0 ]; then
+    printf 'You need to run %s through sudo.\n' "$0" >&2
+    exit 1
+fi
+
+if [ -z "${SUDO_USER:-}" ]; then
+    printf 'SUDO_USER is not set; refusing to guess the target user.\n' >&2
     exit 1
 fi
 
@@ -12,42 +17,65 @@ if [ -x /usr/sbin/daemonize ]; then
 elif [ -x /usr/bin/daemonize ]; then
     DAEMONIZE=/usr/bin/daemonize
 else
-    echo "Cannot execute daemonize to start systemd."
+    printf 'Cannot execute daemonize to start systemd.\n' >&2
     exit 1
 fi
 
-if ! command -v /lib/systemd/systemd > /dev/null; then
-    echo "Cannot execute /lib/systemd/systemd."
+SYSTEMD_BINARY=/lib/systemd/systemd
+SYSTEMD_EXE="$SYSTEMD_BINARY --unit=basic.target"
+
+if [ ! -x "$SYSTEMD_BINARY" ]; then
+    printf 'Cannot execute %s.\n' "$SYSTEMD_BINARY" >&2
     exit 1
 fi
 
-if ! command -v /usr/bin/unshare > /dev/null; then
-    echo "Cannot execute /usr/bin/unshare."
+if [ ! -x /usr/bin/unshare ]; then
+    printf 'Cannot execute /usr/bin/unshare.\n' >&2
     exit 1
 fi
 
-SYSTEMD_EXE="/lib/systemd/systemd --unit=basic.target"
-SYSTEMD_PID="$(ps -eo pid=,args= | awk '$2" "$3=="'"$SYSTEMD_EXE"'" {print $1}')"
+systemd_pid() {
+    ps -eo pid=,args= | awk '$2" "$3=="'"$SYSTEMD_EXE"'" {print $1; exit}'
+}
+
+SYSTEMD_PID="$(systemd_pid)"
 if [ -z "$SYSTEMD_PID" ]; then
-    "$DAEMONIZE" /usr/bin/unshare --fork --pid --mount-proc bash -c 'export container=wsl; mount -t binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc; exec '"$SYSTEMD_EXE"
-    while [ -z "$SYSTEMD_PID" ]; do
-        echo "Sleeping for 1 second to let systemd settle"
+    "$DAEMONIZE" /usr/bin/unshare --fork --pid --mount-proc bash -c \
+        'export container=wsl; mount -t binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc; exec '"$SYSTEMD_EXE"
+
+    for _ in $(seq 1 30); do
+        SYSTEMD_PID="$(systemd_pid)"
+        [ -z "$SYSTEMD_PID" ] || break
         sleep 1
-        SYSTEMD_PID="$(ps -eo pid=,args= | awk '$2" "$3=="'"$SYSTEMD_EXE"'" {print $1}')"
     done
+
+    if [ -z "$SYSTEMD_PID" ]; then
+        printf 'Timed out waiting for legacy systemd to start.\n' >&2
+        exit 1
+    fi
 fi
 
-USER_HOME="$(getent passwd | awk -F: '$1=="'"$SUDO_USER"'" {print $6}')"
-if [ -n "$SYSTEMD_PID" ] && [ "$SYSTEMD_PID" != "1" ]; then
-    if [ -n "$1" ] && [ "$1" != "bash --login" ] && [ "$1" != "/bin/bash --login" ]; then
+USER_HOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
+
+if [ "$SYSTEMD_PID" != "1" ]; then
+    if [ -n "${1:-}" ] && [ "$1" != "bash --login" ] && [ "$1" != "/bin/bash --login" ]; then
+        # The single-quoted command is evaluated by the target user's Bash.
+        # shellcheck disable=SC2016
         exec /usr/bin/nsenter -t "$SYSTEMD_PID" -a \
             /usr/bin/sudo -H -u "$SUDO_USER" \
-            /bin/bash -c 'set -a; [ -f "$HOME/.systemd-env" ] && source "$HOME/.systemd-env"; set +a; exec bash -c '"$(printf "%q" "$@")"
+            /bin/bash -c 'set -a; [ -f "$HOME/.systemd-env" ] && source "$HOME/.systemd-env"; set +a; exec /bin/bash -c "$1"' bash "$1"
     else
+        env_args=()
+        if [ -f "$USER_HOME/.systemd-env" ]; then
+            while IFS= read -r line; do
+                env_args+=("$line")
+            done < "$USER_HOME/.systemd-env"
+        fi
         exec /usr/bin/nsenter -t "$SYSTEMD_PID" -a \
-            /bin/login -p -f "$SUDO_USER" \
-            $([ -f "$USER_HOME/.systemd-env" ] && /bin/cat "$USER_HOME/.systemd-env" | xargs printf ' %q')
+            /bin/login -p -f "$SUDO_USER" "${env_args[@]}"
     fi
-    echo "Existential crisis"
-    exit 1
 fi
+
+printf 'Legacy namespace was not entered because systemd is PID 1.\n' >&2
+exit 1
+

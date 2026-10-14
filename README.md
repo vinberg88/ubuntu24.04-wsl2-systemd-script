@@ -1,9 +1,9 @@
-# Ubuntu 24.04 WSL2 Systemd & Desktop Helper
+# Ubuntu 24.04 & 26.04 WSL2 Systemd and Desktop Helper
 
-This repository helps prepare **Ubuntu 24.04 on WSL2** for Linux desktop launchers that depend on systemd. It is intended to be used together with the desktop guides and launch scripts in [vinberg88/ubuntu](https://github.com/vinberg88/ubuntu/), where you can find instructions for Budgie and other desktop environments.
+This repository helps prepare **Ubuntu 24.04 and Ubuntu 26.04 on WSL2** for Linux desktop launchers that depend on systemd. It is intended to be used together with the desktop guides and launch scripts in [vinberg88/ubuntu](https://github.com/vinberg88/ubuntu/), where you can find instructions for Budgie and other desktop environments.
 
 > [!IMPORTANT]
-> Current WSL versions support systemd natively, and this is the recommended setup. The script in this repository is a **legacy PID-namespace workaround** for older WSL installations that cannot use native systemd. Do not run the legacy script when systemd is already running as PID 1.
+> Current WSL versions support systemd natively, and this is the default setup used by this script. The old **PID-namespace workaround** remains available only through the explicit `--legacy` option. The installer refuses to layer the workaround on top of native systemd.
 
 <p align="center">
   <a href="https://github.com/vinberg88/ubuntu/">
@@ -13,7 +13,8 @@ This repository helps prepare **Ubuntu 24.04 on WSL2** for Linux desktop launche
 
 ## What this repository does
 
-- Documents the recommended native systemd setup for modern WSL.
+- Detects and configures native systemd on Ubuntu 24.04 and Ubuntu 26.04.
+- Provides a `--check` command for systemd, D-Bus, WSLg, X11, Wayland, audio, and OpenGL diagnostics.
 - Keeps the original systemd namespace helper for older WSL installations.
 - Provides the systemd foundation used by desktop launchers in the companion [Ubuntu desktop repository](https://github.com/vinberg88/ubuntu/).
 
@@ -22,7 +23,7 @@ This repository does **not** install a desktop environment or a Windows display 
 ## Requirements
 
 - Windows 10 version 21H2 (build 19044) or newer, or Windows 11, for WSLg GUI application support.
-- WSL2 with Ubuntu 24.04.
+- WSL2 with Ubuntu 24.04 or Ubuntu 26.04.
 - A Linux user with `sudo` access.
 - Internet access for package installation.
 
@@ -34,7 +35,29 @@ wsl --version
 wsl --list --verbose
 ```
 
-Make sure Ubuntu 24.04 is listed as WSL version `2`.
+Make sure your Ubuntu 24.04 or Ubuntu 26.04 distribution is listed as WSL version `2`.
+
+## Quick start
+
+Run the script inside Ubuntu. Its default mode is safe for modern WSL: it uses native systemd and makes no legacy namespace changes when systemd is already active.
+
+```bash
+git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
+cd ubuntu24.04-wsl2-systemd-script
+bash ubuntu-wsl2-systemd-script.sh
+```
+
+If native systemd was not active, the script adds or updates the `[boot]` section in `/etc/wsl.conf` while preserving the other sections. Restart WSL from PowerShell when instructed:
+
+```powershell
+wsl --shutdown
+```
+
+After reopening Ubuntu, run the built-in diagnostics:
+
+```bash
+bash ubuntu-wsl2-systemd-script.sh --check
+```
 
 ## Recommended setup: native WSL systemd
 
@@ -77,7 +100,7 @@ For more information, see Microsoft's guide: [Use systemd to manage Linux servic
 
 ## Legacy setup: systemd namespace workaround
 
-Use this section only when native WSL systemd is unavailable and updating WSL is not possible.
+Use this section only when native WSL systemd is unavailable and updating WSL is not possible. The default command never installs this workaround.
 
 The legacy script starts systemd inside a separate PID namespace and automatically enters that namespace when Bash starts. This was useful before Microsoft added native systemd support to WSL, but it is no longer the preferred configuration.
 
@@ -96,7 +119,7 @@ Review the scripts before running them. There is no automatic uninstall script, 
 
 ### Install and run
 
-Inside Ubuntu 24.04:
+Inside an older WSL installation:
 
 ```bash
 sudo apt update
@@ -104,7 +127,7 @@ sudo apt install -y git util-linux-extra
 
 git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
 cd ubuntu24.04-wsl2-systemd-script
-bash ubuntu-wsl2-systemd-script.sh
+bash ubuntu-wsl2-systemd-script.sh --legacy
 ```
 
 Enter your password when requested and wait for the script to finish. Then close Ubuntu and restart WSL from PowerShell:
@@ -119,7 +142,7 @@ Open Ubuntu again and test the namespace environment:
 systemctl status
 ```
 
-If the script reports that the workaround is already installed, do not use `--force` unless you intentionally want to reinstall the legacy files.
+If the script reports that the workaround is already installed, do not use `--force` unless you intentionally want to reinstall the legacy files. Both `--legacy` and `--force` refuse to run when native systemd already owns PID 1.
 
 ## Start a desktop
 
@@ -156,6 +179,22 @@ printf 'DISPLAY=%s\nWAYLAND_DISPLAY=%s\nXDG_SESSION_TYPE=%s\n' \
   "$DISPLAY" "$WAYLAND_DISPLAY" "$XDG_SESSION_TYPE"
 ```
 
+You can also run the complete non-destructive check:
+
+```bash
+bash ubuntu-wsl2-systemd-script.sh --check
+```
+
+### OpenGL reports `llvmpipe`
+
+`llvmpipe` is software rendering and can make a full desktop slow. On a system with a supported GPU, test the WSL D3D12 renderer with:
+
+```bash
+GALLIUM_DRIVER=d3d12 glxinfo -B
+```
+
+Hybrid-GPU laptops may also need `MESA_D3D12_DEFAULT_ADAPTER_NAME` in the desktop launcher. Use a short adapter match such as `NVIDIA`, `AMD`, or `Intel` only after confirming the installed Windows graphics adapter. Do not hard-code one vendor for every computer.
+
 ### The script asks for manual Windows commands
 
 If Windows interoperability is unavailable, the legacy script prints two `setx` commands. Run exactly those commands in Windows Command Prompt, then restart WSL with `wsl --shutdown`.
@@ -164,9 +203,9 @@ If Windows interoperability is unavailable, the legacy script prints two `setx` 
 
 | File | Purpose |
 | --- | --- |
-| `ubuntu-wsl2-systemd-script.sh` | Installs and configures the legacy namespace workaround. |
-| `start-systemd-namespace` | Starts or enters the systemd namespace from Bash. |
-| `enter-systemd-namespace` | Launches systemd in a separate namespace and enters it. |
+| `ubuntu-wsl2-systemd-script.sh` | Configures native WSL systemd, runs diagnostics, or installs legacy mode when explicitly requested. |
+| `start-systemd-namespace` | Starts or enters the legacy namespace, but exits harmlessly when native systemd owns PID 1. |
+| `enter-systemd-namespace` | Launches legacy systemd in a separate namespace with a startup timeout. |
 
 <p align="center">
   <a href="https://github.com/vinberg88/ubuntu/">
@@ -190,5 +229,6 @@ Budgie is one of the desktop environments available through the companion Ubuntu
   </a>
 </p>
 
-Have fun exploring Ubuntu 24.04 desktops on WSL2!
+Have fun exploring Ubuntu 24.04 and Ubuntu 26.04 desktops on WSL2!
+
 
