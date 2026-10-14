@@ -196,7 +196,7 @@ Classic mode, shut down WSL completely, and reopen Ubuntu.
 Update the checkout with `git pull --ff-only`. This repository's
 `.gitattributes` keeps shell scripts in Unix LF format.
 
-## Origin and included files - Starta Amazing desktops for WSL =)
+## Origin and included files - Start Amazing desktops for WSL =)
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu">
