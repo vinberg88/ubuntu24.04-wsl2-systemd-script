@@ -100,8 +100,8 @@ wsl --shutdown
 Look for more desktops for WSL and Windonws 11.
 
 <p align="center">
-<a href="https://github.com/vinberg88">
-<img width="680" height="321" alt="wsl" src="https://github.com/user-attachments/assets/ad4443ca-9ea9-44a3-a742-fd11112c585b" />
+<a href="https://github.com/vinberg88/ubuntu/">
+<img width="658" height="256" alt="Ubuntu-BIG" src="https://github.com/user-attachments/assets/189e29d0-4771-45d7-a9ca-1fff770b7d7f" />
 </p>
 
 ## Verify and start a desktop
