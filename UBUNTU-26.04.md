@@ -1,3 +1,6 @@
+
+<img width="1072" height="466" alt="Ubuntubanner" src="https://github.com/user-attachments/assets/27a67c2f-1f42-46c2-a5d3-81a3c79dae4f" />
+
 # Ubuntu 26.04 on WSL2
 
 This page contains the Ubuntu 26.04-specific instructions for this repository. The same script also supports Ubuntu 24.04, but keeping the version notes separate makes installation and troubleshooting easier to follow.
