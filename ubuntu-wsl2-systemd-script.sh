@@ -16,14 +16,15 @@ Usage: $SCRIPT_NAME [OPTION]
 Configure systemd for Ubuntu 24.04 on WSL2.
 
 Options:
-  --classic-budgie  Install the proven PID-namespace mode for Budgie (default)
-  --legacy          Alias for --classic-budgie
+  --classic-desktop Install the proven PID-namespace mode for desktops (default)
+  --classic-budgie  Compatibility alias for --classic-desktop
+  --legacy          Compatibility alias for --classic-desktop
   --native          Remove Classic mode and enable native WSL systemd
   --check           Diagnose the current systemd, D-Bus, and display setup
-  --force           Reinstall Classic Budgie mode
+  --force           Reinstall Classic desktop mode
   -h, --help        Show this help text
 
-Classic Budgie mode is based on the original DamionGans WSL2 systemd helper.
+Classic desktop mode is based on the original DamionGans WSL2 systemd helper.
 It disables native WSL systemd before using its own namespace, preventing two
 systemd instances from competing for the user D-Bus and runtime sockets.
 
@@ -192,10 +193,11 @@ windows_cmd() {
 
 install_classic_hook() {
     if classic_hook_installed; then
+        run_root sed -i 's/Classic Budgie systemd namespace/Classic desktop systemd namespace/' /etc/bash.bashrc
         return
     fi
 
-    printf '\n# Start or enter the Classic Budgie systemd namespace in WSL2\nsource /usr/sbin/start-systemd-namespace\n' |
+    printf '\n# Start or enter the Classic desktop systemd namespace in WSL2\nsource /usr/sbin/start-systemd-namespace\n' |
         run_root tee -a /etc/bash.bashrc >/dev/null
 }
 
@@ -206,6 +208,7 @@ remove_classic_hook() {
     temporary_file="$(mktemp)"
 
     awk '
+        /Classic desktop systemd namespace in WSL2/ { next }
         /Classic Budgie systemd namespace in WSL2/ { next }
         /Start or enter (the legacy )?systemd PID namespace in WSL2/ { next }
         /^[[:space:]]*(source|\.)[[:space:]]+\/usr\/sbin\/start-systemd-namespace([[:space:]]|$)/ { next }
@@ -216,14 +219,14 @@ remove_classic_hook() {
     rm -f "$temporary_file"
 }
 
-install_classic_budgie() {
+install_classic_desktop() {
     local cmd_path=""
 
     require_ubuntu_2404
     [[ -f "$CLASSIC_START_HELPER" ]] || die "Missing $CLASSIC_START_HELPER"
     [[ -f "$CLASSIC_ENTER_HELPER" ]] || die "Missing $CLASSIC_ENTER_HELPER"
 
-    printf 'Installing Classic Budgie systemd support for Ubuntu 24.04...\n'
+    printf 'Installing Classic desktop systemd support for Ubuntu 24.04...\n'
     run_root hwclock -s 2>/dev/null || warn "Could not update the WSL clock with hwclock; continuing."
     run_root apt-get update
     run_root apt-get install -y daemonize dbus-user-session fontconfig util-linux-extra
@@ -261,7 +264,7 @@ EOF
         warn "Windows interoperability is unavailable; interactive Bash will still use the installed hook."
     fi
 
-    printf '\nClassic Budgie mode is installed. Native systemd is disabled for this mode.\n'
+    printf '\nClassic desktop mode is installed. Native systemd is disabled for this mode.\n'
     printf 'Close Ubuntu and run this command in Windows PowerShell:\n\n'
     printf '  wsl --shutdown\n\n'
     printf 'Open Ubuntu again, then verify with:\n\n'
@@ -321,7 +324,7 @@ show_status() {
         ((failures += 1))
     elif classic_pid1_running; then
         if [[ "$configured_mode" == "false" ]]; then
-            printf '[OK] Classic Budgie systemd namespace is active without native systemd.\n'
+            printf '[OK] Classic desktop systemd namespace is active without native systemd.\n'
         else
             printf '[WARN] Classic mode is active, but /etc/wsl.conf does not explicitly disable native systemd.\n'
             ((warnings += 1))
@@ -338,7 +341,7 @@ show_status() {
     fi
 
     if [[ "$user_state" == "not available" || "$user_state" == "unknown" ]]; then
-        printf '[FAIL] The user systemd manager is unavailable; Budgie may not start.\n'
+        printf '[FAIL] The user systemd manager is unavailable; desktop sessions may not start.\n'
         ((failures += 1))
     fi
 
@@ -354,7 +357,7 @@ show_status() {
 main() {
     while (($# > 0)); do
         case "$1" in
-            --classic-budgie|--legacy|--force)
+            --classic-desktop|--classic-budgie|--legacy|--force)
                 MODE="classic"
                 ;;
             --native)
@@ -376,7 +379,7 @@ main() {
     done
 
     case "$MODE" in
-        classic) install_classic_budgie ;;
+        classic) install_classic_desktop ;;
         native) configure_native_systemd ;;
         check) show_status ;;
     esac

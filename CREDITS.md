@@ -1,6 +1,6 @@
 # Credits and provenance
 
-Classic Budgie mode uses the systemd PID-namespace technique created for
+Classic desktop mode uses the systemd PID-namespace technique created for
 [`DamionGans/ubuntu-wsl2-systemd-script`](https://github.com/DamionGans/ubuntu-wsl2-systemd-script).
 
 The upstream README states that the script may be used, changed, and
