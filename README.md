@@ -1,6 +1,6 @@
 # Ubuntu 24.04 WSL2 Systemd Helper for WSL Desktops
 
-Start any desktopp via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP - 2026
+Start any desktop via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP - 2026
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
