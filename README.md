@@ -15,10 +15,19 @@ This repository installs the shared systemd compatibility layer. It does **not**
 install one particular desktop. Choose a desktop guide below for its packages,
 environment settings, and launch command.
 
-> [!IMPORTANT]
+> [!IMPORTANT] 
+
+THSI IS BETA AND WE ARE WORKING ON VERSION FOR UBUNTU 26.04.
+
 > Ubuntu 26.04 uses a separate WSLg-based project. See
 > [`ubuntu26.04-wsl2-budgie`](https://github.com/vinberg88/ubuntu26.04-wsl2-budgie)
 > when working with Ubuntu 26.04.
+
+
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu26.04-wsl2-budgie">
+<img width="594" height="354" alt="Ubuntu-26 04-BETA" src="https://github.com/user-attachments/assets/a7a0af99-db0d-4b09-9342-3d77cd4a58c5" />
+</p>
 
 ## Ubuntu 24.04 desktop guides
 
