@@ -138,7 +138,7 @@ Install Ubuntu Budgie and the required Wayland components if they are not alread
 
 ```bash
 sudo apt update
-sudo apt install ubuntu-budgie-desktop labwc xwayland dbus-daemon
+sudo apt install ubuntu-budgie-desktop labwc xwayland dbus-daemon wlr-randr
 ```
 
 Check the environment without changing anything:
@@ -155,6 +155,18 @@ bash ubuntu-26.04-budgie.sh start
 
 The first start asks for the normal Linux `sudo` password because the launcher creates a temporary systemd service. The desktop itself still runs as the current user.
 
+For a shorter command, install the launcher locally once:
+
+```bash
+sudo install -m 0755 ubuntu-26.04-budgie.sh /usr/local/bin/budgie26
+```
+
+You can then start the complete desktop with:
+
+```bash
+budgie26 start
+```
+
 Manage the session with:
 
 ```bash
@@ -162,6 +174,67 @@ bash ubuntu-26.04-budgie.sh status
 bash ubuntu-26.04-budgie.sh log
 bash ubuntu-26.04-budgie.sh restart
 bash ubuntu-26.04-budgie.sh stop
+```
+
+If the short command is installed, the same operations are simply `budgie26 status`, `budgie26 log`, `budgie26 restart`, and `budgie26 stop`.
+
+### Change the desktop window size
+
+WSLg exposes the nested Labwc desktop as a fixed output rather than a normal resizable application window. Change that output with the launcher:
+
+```bash
+bash ubuntu-26.04-budgie.sh size 1600x900
+```
+
+The launcher remembers the selected size and applies it again at the next start. Four readable presets are also available:
+
+```bash
+bash ubuntu-26.04-budgie.sh size small    # 1280x720
+bash ubuntu-26.04-budgie.sh size medium   # 1440x810
+bash ubuntu-26.04-budgie.sh size large    # 1600x900
+bash ubuntu-26.04-budgie.sh size fullhd   # 1920x1080
+```
+
+Show the current and remembered size:
+
+```bash
+bash ubuntu-26.04-budgie.sh size
+```
+
+You can also select the size while starting or restarting:
+
+```bash
+bash ubuntu-26.04-budgie.sh start large
+bash ubuntu-26.04-budgie.sh restart 1600x900
+```
+
+### Maximize the desktop
+
+Maximize the Budgie window to the complete Windows work area with:
+
+```bash
+bash ubuntu-26.04-budgie.sh maximize
+```
+
+This uses the window's standard Windows maximize command, so mouse input stays aligned with the desktop. The Windows taskbar remains visible. The launcher remembers maximized mode and applies it again after a Budgie restart.
+
+With the short command installed, the complete everyday sequence is:
+
+```bash
+budgie26 start
+budgie26 maximize  # needed only once; the choice is remembered
+```
+
+Return to the normal window size with:
+
+```bash
+bash ubuntu-26.04-budgie.sh restore
+```
+
+Running a `size` command also restores normal windowed mode before applying the requested dimensions. For example:
+
+```bash
+bash ubuntu-26.04-budgie.sh size medium
 ```
 
 The launcher uses `PrivateTmp=yes` for the service. This gives Labwc's Xwayland process a correct private `/tmp/.X11-unix` directory and avoids changing WSLg's read-only X11 socket mount.
@@ -205,6 +278,20 @@ bash ubuntu-26.04-budgie.sh restart
 ```
 
 The `doctor` command reports an unmanaged Budgie panel when it can detect one.
+
+### The desktop window cannot be resized by dragging
+
+The nested Labwc output may not expose a normal resize border through WSLg. Use the launcher's persistent size command instead:
+
+```bash
+bash ubuntu-26.04-budgie.sh size large
+```
+
+To fill the usable Windows screen while retaining correct mouse coordinates, use:
+
+```bash
+bash ubuntu-26.04-budgie.sh maximize
+```
 
 ### Portal, screencast, or `glamor` warnings in the log
 

@@ -214,7 +214,7 @@ If Windows interoperability is unavailable, the legacy script prints two `setx` 
 | File | Purpose |
 | --- | --- |
 | `ubuntu-wsl2-systemd-script.sh` | Configures native WSL systemd, runs diagnostics, or installs legacy mode when explicitly requested. |
-| `ubuntu-26.04-budgie.sh` | Starts, stops, checks, and diagnoses Ubuntu Budgie 10.10 as a managed WSLg/Labwc session. |
+| `ubuntu-26.04-budgie.sh` | Starts, stops, resizes, maximizes, checks, and diagnoses Ubuntu Budgie 10.10 as a managed WSLg/Labwc session. |
 | `start-systemd-namespace` | Starts or enters the legacy namespace, but exits harmlessly when native systemd owns PID 1. |
 | `enter-systemd-namespace` | Launches legacy systemd in a separate namespace with a startup timeout. |
 
