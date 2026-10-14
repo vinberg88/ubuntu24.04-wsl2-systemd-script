@@ -155,6 +155,11 @@ bash ubuntu-wsl2-systemd-script.sh --native
 
 Then close Ubuntu and run `wsl --shutdown` from Windows PowerShell.
 
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu/">
+<img width="653" height="197" alt="Ubuntu" src="https://github.com/user-attachments/assets/6eedf467-61b8-4630-8c18-5a29c4dfa98a" />
+</p>
+
 ## Troubleshooting
 
 ### A desktop does not start
