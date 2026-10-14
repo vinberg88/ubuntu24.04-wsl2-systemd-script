@@ -66,6 +66,7 @@ wsl --shutdown
 After reopening Ubuntu, run the built-in diagnostics:
 
 ```bash
+cd ubuntu24.04-wsl2-systemd-script
 bash ubuntu-wsl2-systemd-script.sh --check
 ```
 
