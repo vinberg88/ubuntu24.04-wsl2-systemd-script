@@ -4,7 +4,7 @@ Start any desktop via this script for Ubuntu 24.04 - Desktop example for Ubuntu 
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
-<img width="800" height="500" alt="Ubuntu 24.04 Budgie Desktop" src="https://github.com/user-attachments/assets/033ad70c-eb64-496c-9957-37466923a06d" />
+<img width="1000" height="600" alt="Ubuntu 24.04 Budgie Desktop" src="https://github.com/user-attachments/assets/033ad70c-eb64-496c-9957-37466923a06d" />
 </p>
 
 This project prepares **Ubuntu 24.04 on WSL2** for complete X11 desktop
