@@ -71,7 +71,7 @@ Ubuntu 24.04:
 
 ```bash
 sudo apt update
-sudo apt install -y git
+sudo apt install -y git mesa-utils daemonize util-linux-extra
 git clone https://github.com/vinberg88/ubuntu24.04-wsl2-systemd-script.git
 cd ubuntu24.04-wsl2-systemd-script
 bash ubuntu-wsl2-systemd-script.sh --classic-desktop
