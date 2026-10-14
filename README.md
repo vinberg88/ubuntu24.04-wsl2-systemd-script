@@ -1,5 +1,7 @@
 # Systemd script for UBUNTU 24.04 - WSL desktops - 2026
 
+
+
 This script is for desktops via Ubuntu 24.04 WSL - All desktop starts thanks to this Magic script.
 
 Script to enable systemd support on current Ubuntu 24.04 images WSL image. 
