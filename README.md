@@ -1,4 +1,7 @@
-# Ubuntu 24.04 WSL2 Systemd Helper for X410 Desktops
+# Ubuntu 24.04 WSL2 Systemd Helper for WSL Desktops
+
+
+Start any desktopp via this script for Ubuntu 24.04
 
 This project prepares **Ubuntu 24.04 on WSL2** for complete X11 desktop
 sessions displayed through **X410**. The same systemd helper is used by GNOME,
