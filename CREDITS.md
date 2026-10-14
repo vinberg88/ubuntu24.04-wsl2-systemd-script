@@ -15,4 +15,3 @@ upstream command structure, including the Ubuntu 24.04-compatible
 
 Original work was based on instructions from the
 [Snapcraft forum](https://forum.snapcraft.io/t/running-snaps-on-wsl2-insiders-only-for-now/13033).
-
