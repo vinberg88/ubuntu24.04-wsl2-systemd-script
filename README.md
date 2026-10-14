@@ -10,9 +10,13 @@ Script to enable systemd support on current Ubuntu 24.04 images WSL image.
 </p>
 
 ## Usage
-You need ```git``` to be installed for the commands below to work. Use
+You need ```git and hwclock``` to be installed for the commands below to work. Use
 ```sh
+
+sudo apt install util-linux-extra
+
 sudo apt install git
+
 ```
 to do so.
 ### Run the script and commands
