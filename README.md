@@ -11,6 +11,15 @@ This repository helps prepare **Ubuntu 24.04 and Ubuntu 26.04 on WSL2** for Linu
   </a>
 </p>
 
+## Choose your Ubuntu version
+
+| Ubuntu version | Instructions | Status |
+| --- | --- | --- |
+| Ubuntu 24.04 LTS | Continue with this README | Supported |
+| Ubuntu 26.04 LTS | [Open the dedicated Ubuntu 26.04 guide](UBUNTU-26.04.md) | Tested on Ubuntu 26.04.1 |
+
+Both versions use the same maintained scripts. The separate Ubuntu 26.04 page keeps its installation, validation, GPU, and troubleshooting notes from becoming mixed with the original Ubuntu 24.04 guide.
+
 ## What this repository does
 
 - Detects and configures native systemd on Ubuntu 24.04 and Ubuntu 26.04.
