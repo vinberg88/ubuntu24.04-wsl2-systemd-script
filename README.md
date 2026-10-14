@@ -165,12 +165,6 @@ Run:
 bash ubuntu-wsl2-systemd-script.sh --check
 ```
 
-<p align="center">
-<a href="https://github.com/vinberg88/ubuntu">
-<img width="1021" height="717" alt="desktops for Ubuntu" src="https://github.com/user-attachments/assets/83685ed4-a1aa-417e-9b2a-d62b17f42624" />
-</p>
-
-
 If native and Classic systemd are running together, reinstall Classic mode and
 restart WSL:
 
