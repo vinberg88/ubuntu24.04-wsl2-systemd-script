@@ -58,6 +58,13 @@ The helper also carries the shell environment into the namespace. Set
 `DISPLAY` and the X11 session variables exactly as described by your selected
 desktop guide before launching that desktop.
 
+What you can use this script for =)
+
+<p align="center">
+<a href="https://github.com/vinberg88/ubuntu/">
+<img width="1000" height="600" alt="Ubuntu 24.04 Budgie Desktop" src="https://github.com/user-attachments/assets/033ad70c-eb64-496c-9957-37466923a06d" />
+</p>
+
 ## Install the shared helper
 
 First confirm in Windows PowerShell that Ubuntu 24.04 is running as WSL 2:
