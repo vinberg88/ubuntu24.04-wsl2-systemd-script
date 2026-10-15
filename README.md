@@ -1,11 +1,10 @@
-# Ubuntu 24.04 WSL2 Systemd Helper for WSL Desktops
+# Ubuntu 24.04 Via this script any densktop will start for WSL - Uubntu 24.04
 
-Start any desktop via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
-
+Start any desktop via this script for Ubuntu 24.04 - Desktops example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
-<img width="573" height="139" alt="pro" src="https://github.com/user-attachments/assets/0f5591f9-6ebd-4a52-8317-2d75f233cdab" />
+<img width="675" height="307" alt="UbuntuDesktop" src="https://github.com/user-attachments/assets/d32fd87f-0c1a-4c1a-80b3-eb8fdd86f3b8" />
 </p>
 
 This project prepares **Ubuntu 24.04 on WSL2** for complete X11 desktop
