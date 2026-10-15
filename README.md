@@ -1,10 +1,10 @@
-# Ubuntu 24.04 Via this script any densktop will start for WSL - Uubntu 24.04
+# Ubuntu 24.04 - this script run desktops that will start for WSL - ubuntu
 
 Start any desktop via this script for Ubuntu 24.04 - Desktops example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
-<img width="675" height="307" alt="UbuntuDesktop" src="https://github.com/user-attachments/assets/d32fd87f-0c1a-4c1a-80b3-eb8fdd86f3b8" />
+<img width="550" height="250" alt="UbuntuDesktop" src="https://github.com/user-attachments/assets/d32fd87f-0c1a-4c1a-80b3-eb8fdd86f3b8" />
 </p>
 
 This project prepares **Ubuntu 24.04 on WSL2** for complete X11 desktop
