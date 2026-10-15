@@ -2,9 +2,10 @@
 
 Start any desktop via this script for Ubuntu 24.04 - Desktop example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
 
+
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
-<img width="1000" height="600" alt="Ubuntu 24.04 Budgie Desktop" src="https://github.com/user-attachments/assets/033ad70c-eb64-496c-9957-37466923a06d" />
+<img width="573" height="139" alt="pro" src="https://github.com/user-attachments/assets/0f5591f9-6ebd-4a52-8317-2d75f233cdab" />
 </p>
 
 This project prepares **Ubuntu 24.04 on WSL2** for complete X11 desktop
