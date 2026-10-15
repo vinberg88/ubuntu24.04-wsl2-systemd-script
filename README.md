@@ -1,6 +1,6 @@
-# Ubuntu 24.04 - this script run desktops that will start for WSL - ubuntu
+# Ubuntu 24.04 - this script run desktops that will start for WSL
 
-Start any desktop via this script for Ubuntu 24.04 - Desktops example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
+Start any desktop via this script for Ubuntu 24.04. This magic script works well via Ubuntu 24.04
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
@@ -23,6 +23,7 @@ THSI IS BETA AND WE ARE WORKING ON VERSION FOR UBUNTU 26.04.
 > [`ubuntu26.04-wsl2-budgie`](https://github.com/vinberg88/ubuntu26.04-wsl2-budgie)
 > when working with Ubuntu 26.04.
 
+Desktops example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu26.04-wsl2-budgie">
