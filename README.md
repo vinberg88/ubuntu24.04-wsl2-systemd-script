@@ -23,8 +23,6 @@ THSI IS BETA AND WE ARE WORKING ON VERSION FOR UBUNTU 26.04.
 > [`ubuntu26.04-wsl2-budgie`](https://github.com/vinberg88/ubuntu26.04-wsl2-budgie)
 > when working with Ubuntu 26.04.
 
-Desktops example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
-
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu26.04-wsl2-budgie">
 <img width="594" height="354" alt="Ubuntu-26 04-BETA" src="https://github.com/user-attachments/assets/a7a0af99-db0d-4b09-9342-3d77cd4a58c5" />
@@ -58,7 +56,7 @@ The helper also carries the shell environment into the namespace. Set
 `DISPLAY` and the X11 session variables exactly as described by your selected
 desktop guide before launching that desktop.
 
-What you can use this script for =)
+What you can use this script for =) Desktops example for Ubuntu 24.04 - BUDGIE DESKTOP FOR WSL - 2026
 
 <p align="center">
 <a href="https://github.com/vinberg88/ubuntu/">
